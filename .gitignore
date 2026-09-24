@@ -1,0 +1,14 @@
+# ignore absolutely everything
+*
+
+# allow git to look inside folder
+!*/
+
+# whitelist cpp source files and some notes
+!*.cpp
+!*.h
+!*.hpp
+!*.cc
+!*cxx
+!README.md
+!.gitignore
