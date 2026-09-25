@@ -104,6 +104,72 @@ public:
 
     return head;
   }
+
+  Node* deleteFromFront(Node *head){
+
+    if (head == nullptr){
+      return nullptr;
+    }
+
+    
+    head = head->next;
+    delete head->prev;
+    head->prev = nullptr;
+
+    return head;
+  }
+
+  Node* deleteFromEnd(Node* head){
+    if (head == nullptr){
+      return nullptr;
+    }
+
+    if (head->next == nullptr){
+      delete head;
+      return nullptr;
+    }
+
+    // move to end
+    Node *temp = head;
+    while (temp->next != nullptr){
+      temp = temp->next;
+    }
+
+    temp->prev->next = nullptr;
+    delete temp;
+
+    return head;
+  }
+
+  Node *deleteFromPosition(Node *head, int position){
+
+    // if list is empty
+    if (head == nullptr){
+      return nullptr;
+    }
+    Node *curr = head;
+    for (int i = 1; i < position && curr != nullptr; i++){
+      curr = curr->next;
+    }
+
+    // if node to delete is not the first node, update previous node's next
+    if (curr->prev != nullptr) {
+      curr->prev->next = curr->next;
+    }
+
+    // if node to delete is not the last node
+    if (curr->next != nullptr){
+    curr->next->prev = curr->prev;
+    }
+
+    // if deleting the head 
+    if (head == curr){
+      head = curr->next;
+    }
+
+    delete curr;
+    return head;  
+  }
 };
 
 int main() {
@@ -136,6 +202,14 @@ int main() {
 
   head = dll.insertAtPosition(head, 3, 87);
   dll.forwardTraversal(head);
-  return 0;
 
+  head = dll.deleteFromFront(head);
+  dll.forwardTraversal(head);
+
+  head = dll.deleteFromEnd(head);
+  dll.forwardTraversal(head);
+
+  head = dll.deleteFromPosition(head, 3);
+  dll.forwardTraversal(head);
+  return 0;
 }
